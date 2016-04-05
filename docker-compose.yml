@@ -1,0 +1,34 @@
+version: "2"
+services:
+
+  streamsetsimage:
+    container_name: streamsets
+    build: build
+    ulimits:
+      nofile:
+        soft: 20000
+        hard: 40000
+      nproc: 65535
+    ports:
+      - "18630:18630"
+    volumes:
+      - sdcconfig:/streamsets/etc
+      - sdcdata:/streamsets/data
+      - sdclog:/streamsets/log
+      - sdcresources:/streamsets/resources
+    networks:
+      - front
+
+volumes:
+  sdcconfig:
+    driver: local
+  sdclog:
+    driver: local
+  sdcdata:
+    driver: local
+  sdcresources:
+    driver: local
+
+networks:
+  front:
+    driver: bridge
