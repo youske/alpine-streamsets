@@ -15,7 +15,7 @@ ENV PACKAGE='bash libstdc++' \
     DOWNLOAD_PACKAGE='wget git ca-certificates' \
     LANG=C.UTF-8 \
     STREAMSETS_BASE=/streamsets \
-    WORK_DIR=/home/streamsets 
+    WORK_DIR=/home/streamsets
 
 ENV PATH=${STREAMSETS_BASE}/bin:$PATH
 
@@ -30,7 +30,7 @@ RUN wget --no-check-certificate ${STREAMSETS_DOWNLOAD} -O- | tar zx && \
     mv streamsets-datacollector-${STREAMSETS_VERSION} ${STREAMSETS_BASE} && \
     chown -R streamsets:streamsets ${STREAMSETS_BASE}
 
-RUN apk del dlpack && rm -rf /tmp/* /var/cache/apk/*
+RUN apk del dlpack --no-cache && rm -rf /tmp/* /var/cache/apk/*
 
 EXPOSE 18630
 
