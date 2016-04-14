@@ -11,13 +11,14 @@ services:
       nproc: 65535
     ports:
       - "18630:18630"
+    stdin_open: true
     volumes:
       - sdcconfig:/streamsets/etc
       - sdcdata:/streamsets/data
       - sdclog:/streamsets/log
       - sdcresources:/streamsets/resources
     networks:
-      - front
+      - universe
 
 volumes:
   sdcconfig:
@@ -30,5 +31,6 @@ volumes:
     driver: local
 
 networks:
-  front:
-    driver: bridge
+  universe:
+    external:
+      name: universe-network
