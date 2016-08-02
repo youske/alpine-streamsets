@@ -1,7 +1,7 @@
 version: "2"
 services:
 
-  streamsetsimage:
+  streamsets:
     container_name: streamsets
     build: build
     ulimits:
@@ -17,8 +17,6 @@ services:
       - sdcdata:/streamsets/data
       - sdclog:/streamsets/log
       - sdcresources:/streamsets/resources
-    networks:
-      - universe
 
 volumes:
   sdcconfig:
@@ -29,8 +27,3 @@ volumes:
     driver: local
   sdcresources:
     driver: local
-
-networks:
-  universe:
-    external:
-      name: universe-network
