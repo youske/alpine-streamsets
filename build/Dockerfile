@@ -30,16 +30,19 @@ RUN apk update --no-cache
 RUN apk add --no-cache ${PACKAGE} && apk add --no-cache ${BUILD_PACKAGE} -t buildpack
 
 # streamsets download
-RUN wget --no-check-certificate ${STREAMSETS_DOWNLOAD} 
+RUN wget --no-check-certificate ${STREAMSETS_DOWNLOAD}
 RUN tar zxf ${STREAMSETS_FILE} && \
     mv streamsets-datacollector-${STREAMSETS_VERSION} ${STREAMSETS_BASE} && \
     chown -R ${STREAMSETS_USER}:${STREAMSETS_USER} ${STREAMSETS_BASE}
 
 RUN apk del buildpack --no-cache && rm -rf /tmp/* /var/cache/apk/*
 
+# privatedata volumes
+RUN mkdir -p ${STREAMSETS_BASE}/privateconfigure && \
+    chown -R ${STREAMSETS_USER}:${STREAMSETS_USER} ${STREAMSETS_BASE}
+
 EXPOSE ${PORT}
 
-USER ${STREAMDSETS_USER}
 WORKDIR ${WORK_DIR}
 ENTRYPOINT ["switch","shell=/bin/bash","--","/init"]
 CMD ["/streamsets/bin/streamsets","dc"]

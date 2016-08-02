@@ -5,18 +5,18 @@ services:
     container_name: streamsets
     build: build
     ulimits:
+      nproc: 65535
       nofile:
         soft: 20000
         hard: 40000
-      nproc: 65535
     ports:
       - "18630:18630"
-    stdin_open: true
     volumes:
       - sdcconfig:/streamsets/etc
       - sdcdata:/streamsets/data
       - sdclog:/streamsets/log
       - sdcresources:/streamsets/resources
+      - privateconfigure:/privateconfigure
 
 volumes:
   sdcconfig:
@@ -26,4 +26,6 @@ volumes:
   sdcdata:
     driver: local
   sdcresources:
+    driver: local
+  privateconfigure:
     driver: local
