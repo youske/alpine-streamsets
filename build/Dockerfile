@@ -30,7 +30,8 @@ RUN apk update --no-cache
 RUN apk add --no-cache ${PACKAGE} && apk add --no-cache ${BUILD_PACKAGE} -t buildpack
 
 # streamsets download
-RUN wget -q --no-check-certificate ${STREAMSETS_DOWNLOAD} -O- | tar zx && \
+RUN wget --no-check-certificate ${STREAMSETS_DOWNLOAD} 
+RUN tar zxf ${STREAMSETS_FILE} && \
     mv streamsets-datacollector-${STREAMSETS_VERSION} ${STREAMSETS_BASE} && \
     chown -R ${STREAMSETS_USER}:${STREAMSETS_USER} ${STREAMSETS_BASE}
 
